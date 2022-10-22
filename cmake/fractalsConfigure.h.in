@@ -1,0 +1,2 @@
+#define fractal_VERSION_MAJOR @fractal_VERSION_MAJOR @
+#define fractal_VERSION_MINOR @fractal_VERSION_MINOR @
