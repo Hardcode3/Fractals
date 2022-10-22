@@ -1,5 +1,5 @@
 # fractals
-![image](assets/sample.bnp)
+![image](assets/sample.bmp)
 ## Description
 Fractals is a console application to create [fractal](https://en.wikipedia.org/wiki/Fractal) images.
 It uses the .bmp format as output.
