@@ -1,5 +1,6 @@
 build
 build/
+build\
 [Bb][Uu][Ii][Ll][Dd]/
 
 CMakeLists.txt.user
