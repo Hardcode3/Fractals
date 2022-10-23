@@ -1,5 +1,5 @@
 # fractals
-![image](assets/iteration_effect/sample_20.bmp)
+![image](assets/iteration_effect/sample_20.jpg)
 ## Description
 Fractals is a console application to create [fractal](https://en.wikipedia.org/wiki/Fractal) images.
 It uses the .bmp format as output.
@@ -38,16 +38,16 @@ Future versions will add:
 -
 
 # Iteration effect : demo
-![it = 1](assets/iteration_effect/sample_1.bnp)
-![it = 5](assets/iteration_effect/sample_5.bnp)
-![it = 10](assets/iteration_effect/sample_10.bnp)
-![it = 20](assets/iteration_effect/sample_20.bnp)
-![it = 30](assets/iteration_effect/sample_30.bnp)
-![it = 40](assets/iteration_effect/sample_40.bnp)
-![it = 50](assets/iteration_effect/sample_50.bnp)
-![it = 60](assets/iteration_effect/sample_60.bnp)
-![it = 70](assets/iteration_effect/sample_70.bnp)
-![it = 80](assets/iteration_effect/sample_80.bnp)
-![it = 90](assets/iteration_effect/sample_90.bnp)
-![it = 100](assets/iteration_effect/sample_100.bnp)
-![it = 110](assets/iteration_effect/sample_110.bnp)
+![it = 1](assets/iteration_effect/sample_1.jpg)
+![it = 5](assets/iteration_effect/sample_5.jpg)
+![it = 10](assets/iteration_effect/sample_10.jpg)
+![it = 20](assets/iteration_effect/sample_20.jpg)
+![it = 30](assets/iteration_effect/sample_30.jpg)
+![it = 40](assets/iteration_effect/sample_40.jpg)
+![it = 50](assets/iteration_effect/sample_50.jpg)
+![it = 60](assets/iteration_effect/sample_60.jpg)
+![it = 70](assets/iteration_effect/sample_70.jpg)
+![it = 80](assets/iteration_effect/sample_80.jpg)
+![it = 90](assets/iteration_effect/sample_90.jpg)
+![it = 100](assets/iteration_effect/sample_100.jpg)
+![it = 110](assets/iteration_effect/sample_110.jpg)
