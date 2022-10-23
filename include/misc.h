@@ -5,20 +5,21 @@
 #include <iostream>
 
 template <typename T>
-std::vector<T> linspace(const T& start, const T& end, const unsigned int& size) {
+std::vector<T> linspace(const T& min, const T& max, const unsigned int& size) {
 	std::vector<T> returned_vector;
 	
-	assert(size != 0);
+	assert(size > 0);
+	assert(min < max);
 	
 	if (size == 1) {
-		returned_vector.push_back(static_cast<T>(start));
+		returned_vector.push_back(static_cast<T>(min));
 	}
 	else {
-		const double step = (end - start) / (size - 1);
+		const double step = (max - min) / (size - 1);
 		for (unsigned int i = 0; i < size - 1; i++) {
-			returned_vector.push_back(static_cast<T>(start + step * i));
+			returned_vector.push_back(static_cast<T>(min + step * i));
 		}
-		returned_vector.push_back(static_cast<T>(end));
+		returned_vector.push_back(static_cast<T>(max));
 	}
 	return returned_vector;
 }
@@ -38,8 +39,8 @@ void print_std_vector(const std::vector<T> &vector) {
 
 template <typename T>
 void print_matrix(const std::vector < std::vector<T>> & matrix) {
-	if (if ((matrix[0].size() > 0) && (matrix[1].size() > 0))) {
-		for (unsigned int i = 0; i < matrix[0].size(); i++) {
+	if ( (matrix.size() > 0) && (matrix[0].size() > 0)) {
+		for (unsigned int i = 0; i < matrix.size(); i++) {
 			print_std_vector(matrix[i]);
 		}
 	}

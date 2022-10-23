@@ -1,36 +1,23 @@
 #include <iostream>
 #include <mandelbrot_set.h>
-#include <misc.h>
 #include <image.h>
+#include <misc.h>
 
 int main(int argc, char** argv) {
 
-	complex_matrix c_matrix;
-	bool_matrix stability_matrix;
+	mandelbrot("G:\sample_1.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 1);
+	mandelbrot("G:\sample_5.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 5);
+	mandelbrot("G:\sample_10.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 10);
+	mandelbrot("G:\sample_20.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 20);
+	mandelbrot("G:\sample_30.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 30);
+	mandelbrot("G:\sample_40.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 40);
+	mandelbrot("G:\sample_50.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 50);
+	mandelbrot("G:\sample_60.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 60);
+	mandelbrot("G:\sample_70.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 70);
+	mandelbrot("G:\sample_80.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 80);
+	mandelbrot("G:\sample_90.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 90);
+	mandelbrot("G:\sample_100.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 100);
+	mandelbrot("G:\sample_110.bmp", -2, 1, -1, 1, 1368 * .6, 720 * .6, 110);
 
-	grid(c_matrix, stability_matrix, -2, 2, -2, 2, 10000, 20);
-
-	//draw_bool_matrix(stability_matrix);
-
-	const int width = stability_matrix.size();
-	const int height = stability_matrix[0].size();
-	const char* path = "test.bmp";
-
-	std::cout << "height : " << height << "; width : " << width << "\n";
-	Img::Image image(path, width, height);
-	
-
-	for (int y = 0; y < stability_matrix.size(); y++) {
-		for (int x = 0; x < stability_matrix[0].size(); x++) {
-			if (stability_matrix[y][x]) {
-				image.set_color(Img::BLACK, x, y);
-			}
-			else {
-				image.set_color(Img::WHITE, x, y);
-			}
-			//image.set_color(Img::Color((float)x / (float)width, 1.0f - (float)x / (float)width, (float)y / (float)height), x, y);
-		}
-	}
-	image.save();
 	return 0;
 }
