@@ -1,5 +1,5 @@
 # fractals
-![image](assets/iteration_effect/sample_20.jpg)
+![image](assets/presentation.jpg)
 ## Description
 Fractals is a console application to create [fractal](https://en.wikipedia.org/wiki/Fractal) images.
 It uses the .bmp format as output.

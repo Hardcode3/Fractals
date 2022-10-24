@@ -1,6 +1,9 @@
 #include <iostream>
-#include <mandelbrot_set.h>
+#include <mandelbrot.h>
 
+bool mandelbrot_1() {
+	return true;
+}
 
 int main() {
 	if (true) {

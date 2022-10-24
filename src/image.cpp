@@ -1,29 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <image.h>
 #include <vector>
 #include <assert.h>
 
-bool p3_img(const std::string& file_name, unsigned int height, unsigned int width) {
-	std::ofstream image;
-	image.open(file_name + ".ppm");
+#include <image.h>
 
-	if (image.is_open()) {
-		image << "p3" << std::endl;
-		image << height << " " << width << std::endl;
-		image << "255" << std::endl;
-
-		for (unsigned int i = 0; i < width; i++) {
-			for (unsigned int j = 0; i < height; i++) {
-				image << 150 << " " << 150 << " " << 200 << std::endl;
-			}
-		}
-	}
-	else { return false; }
-	image.close();
-	return true;
-}
 
 Img::Color::Color() :r_(0), g_(0), b_(0){}
 
@@ -31,47 +13,55 @@ Img::Color::Color(int r, int g, int b) :r_((float)r), g_((float)g), b_((float)b)
 
 Img::Color::Color(float r, float g, float b) : r_(r), g_(g), b_(b) { ; }
 
+Img::Color::Color(double r, double g, double b) : r_(r), g_(g), b_(b) { ; }
+
 Img::Color::~Color(){};
 
-Img::Image::Image(const char* path, int width, int height):path_(path), width_(width), height_(height), colors_(std::vector<Img::Color>(width * height)) {
+Img::Image::Image(const char* path, int width, int height):path_(path), width_(width), height_(height), colors_(std::vector<Img::Color>(width * height)) 
+{
 	assert(width_ >= 100);
 	assert(height_ >= 100);
 }
 
-Img::Image::Image():path_("default.bmp"), width_(500), height_(500), colors_(std::vector<Img::Color>(2500)) {
+Img::Image::Image():path_("default.bmp"), width_(500), height_(500), colors_(std::vector<Img::Color>(2500)) 
+{
 	assert(width_ >= 100);
 	assert(height_ >= 100);
 }
 
 Img::Image::~Image(){}
 
-Img::Color Img::Image::get_color(int x, int y) const {
+Img::Color Img::Image::get_color(int x, int y) const
+{
 	return colors_[y * width_ + x];
 }
 
-void Img::Image::set_color(const Color& color, int x, int y) {
+void Img::Image::set_color(const Color& color, int x, int y) 
+{
 	colors_[y * width_ + x].r_ = color.r_;
 	colors_[y * width_ + x].g_ = color.g_;
 	colors_[y * width_ + x].b_ = color.b_;
 }
 
-void Img::Image::write_bool_matrix(
-	const std::vector<std::vector<bool>>& boolean_matrix,
-	const Img::Color color_0,
-	const Img::Color color_1) {
+void Img::Image::write_matrix(
+	const std::vector<std::vector<double>>& double_matrix,
+	const unsigned int &min_value, 
+	const unsigned int &max_value) 
+{
+	assert((double_matrix.size() == height_) && (double_matrix[0].size() == width_));
 
-	//std::cout << "image width " << width_ << " ; image height : " << height_ << std::endl;
-	//std::cout << "matrix width " << boolean_matrix[0].size() << " ; matrix height : " << boolean_matrix.size() << std::endl;
-	assert((boolean_matrix.size() == height_) && (boolean_matrix[0].size() == width_));
-
-	for (int y = 0; y < height_; y++) {
-		for (int x = 0; x < width_; x++) {
-			if (boolean_matrix[y][x]) {
-				set_color(color_1, x, y);
-			}
-			else {
-				set_color(color_0, x, y);
-			}
+	for (int y = 0; y < height_; y++) 
+	{
+		for (int x = 0; x < width_; x++) 
+		{
+			// normalisation of the values
+			float current_value = double_matrix[y][x] / max_value;
+			const float r = 3;
+			const float g = 5;
+			const float b = 3;
+	
+			// modify values here to change the colors of the image
+			set_color(Img::Color(current_value * r, current_value * g, current_value * b), x, y);
 		}
 	}
 	save();
@@ -81,7 +71,8 @@ bool Img::Image::save() const
 {	
 	std::fstream image_;
 	image_.open(path_, std::ios::out | std::ios::binary);
-	if (!image_.is_open()) {
+	if (!image_.is_open()) 
+	{
 		std::cout << "Error, file can't be opened \n";
 		return false;
 	}
@@ -176,8 +167,10 @@ bool Img::Image::save() const
 		image_.write(reinterpret_cast<char*>(file_header), file_header_size);
 		image_.write(reinterpret_cast<char*>(information_header), information_header_size);
 	
-		for (int y = 0; y < height_; y++) {
-			for (int x = 0; x < width_; x++) {
+		for (int y = 0; y < height_; y++) 
+		{
+			for (int x = 0; x < width_; x++)
+			{
 
 				// since colors are considered as floating point between 0 and 1, they should be back to the classical range
 				// colors are 0-255 values for red, green and blue
