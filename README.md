@@ -1,4 +1,5 @@
 # fractals
+![image](assets/color_sample.jpg)
 ![image](assets/presentation.jpg)
 ## Description
 Fractals is a console application to create [fractal](https://en.wikipedia.org/wiki/Fractal) images.
