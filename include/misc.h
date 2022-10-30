@@ -101,6 +101,8 @@ void find_extremums(
 * @brief computes a set based on its sequence
 * @see sequence.h for more details
 * @param stability_plane the matrix (std::vectors of std::vectors with a unsigned int type)
+* @param is_julia true if the fractal set should be julia, false if mandelbrot
+* @param c starting complex (does not matter in the mandelbrot set, very important in the julia set)
 * @param min_value the minimum value of the stability_plane matrix
 * @param max_value the maximum value of the stability_plane matrix
 * @param x_min the lower real boudary of the complex plane
@@ -113,6 +115,8 @@ void find_extremums(
 */
 void compute_set(
 	double_matrix& stability_plane,
+	const bool& is_julia,
+	std::complex<double>& c,
 	double & min_value,
 	double & max_value,
 	const double &x_min,
@@ -126,6 +130,8 @@ void compute_set(
 /*
 * @brief creates the fractal
 * @param file_name path of the output image
+* @param is_julia true if the fractal set should be julia, false if mandelbrot
+* @param c starting complex (does not matter in the mandelbrot set, very important in the julia set)
 * @param offset_x offset that will be applied to the real axis in the complex plane
 * @param offset_y offset that will be applied to the real axis in the complex plane
 * @param image_ratio ratio of the image (common ratios are 16/9, 16/10, 4/3...)
@@ -135,6 +141,8 @@ void compute_set(
 */
 void fractal(
 	const char* file_name,
+	const bool &is_julia,
+	std::complex<double>& c,
 	const double& offset_x,
 	const double& offset_y,
 	const double& image_ratio,

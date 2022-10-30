@@ -56,9 +56,9 @@ void Img::Image::write_matrix(
 		{
 			// normalisation of the values
 			float current_value = double_matrix[y][x] / max_value;
-			const float r = 3;
-			const float g = 5;
-			const float b = 3;
+			const float r = 0.4*2;
+			const float g = 0.4*2;
+			const float b = 0.7*4;
 	
 			// modify values here to change the colors of the image
 			set_color(Img::Color(current_value * r, current_value * g, current_value * b), x, y);

@@ -15,6 +15,8 @@ void find_extremums(
 
 void compute_set(
 	double_matrix& stability_plane,
+	const bool &is_julia,
+	std::complex<double> &c,
 	double & min_value,
 	double & max_value,
 	const double& x_min,
@@ -46,8 +48,11 @@ void compute_set(
 			for (unsigned int re_index = 0; re_index < width; re_index++) 
 			{
 				std::complex<double> temp_complex(re[re_index], im[im_index]);
-				__temp_current_value = mandelbrot_sequence(iterations, std::complex<double>(0, 0), temp_complex);
-				
+				// this nested if statement could be deleted using a pointer to a function
+				if (is_julia)
+					__temp_current_value = mandelbrot_sequence(iterations, temp_complex, c);
+				else
+					__temp_current_value = mandelbrot_sequence(iterations, std::complex<double>(0, 0), temp_complex);
 				find_extremums(__temp_current_value, min_value, max_value);
 				__temp_vector.push_back(__temp_current_value);
 			}
@@ -59,6 +64,8 @@ void compute_set(
 
 void fractal(
 	const char* file_name,
+	const bool& is_julia,
+	std::complex<double>& c,
 	const double& offset_x,
 	const double& offset_y,
 	const double& image_ratio,
@@ -78,13 +85,14 @@ void fractal(
 	double_matrix complex_plane;
 	double min_value = 25000000, max_value = 0;
 	
+	// todo asserts
 	assert(x_min < x_max);
 	assert(y_min < y_max);
 	assert(width >= 100);
 	assert(height >= 100);
 	assert(iterations > 0);
 
-	compute_set(complex_plane, min_value, max_value, x_min, x_max, y_min, y_max, width, height, iterations);
+	compute_set(complex_plane,is_julia ,c , min_value, max_value, x_min, x_max, y_min, y_max, width, height, iterations);
 	Img::Image image(file_name, width, height);
 	image.write_matrix(complex_plane, min_value, max_value);
 
