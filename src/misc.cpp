@@ -73,6 +73,11 @@ void fractal(
 	const double& zoom,
 	const unsigned int& iterations)
 {
+	assert(iterations > 0);
+	assert(image_ratio > 0);
+	assert(resolution > 100);
+	assert(zoom > 0);
+	
 	const double x_scale = 2.;
 	const double y_scale = 2. / image_ratio;
 	const double x_min = -x_scale / (2. * zoom) - offset_x;
@@ -85,13 +90,6 @@ void fractal(
 	double_matrix complex_plane;
 	double min_value = 25000000, max_value = 0;
 	
-	// todo asserts
-	assert(x_min < x_max);
-	assert(y_min < y_max);
-	assert(width >= 100);
-	assert(height >= 100);
-	assert(iterations > 0);
-
 	compute_set(complex_plane,is_julia ,c , min_value, max_value, x_min, x_max, y_min, y_max, width, height, iterations);
 	Img::Image image(file_name, width, height);
 	image.write_matrix(complex_plane, min_value, max_value);
