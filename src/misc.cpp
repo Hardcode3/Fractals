@@ -25,7 +25,8 @@ void compute_set(
 	const double& y_max,
 	const unsigned int& width,
 	const unsigned int& height,
-	const unsigned int& iterations)
+	const unsigned int& iterations,
+	unsigned int symmetry)
 {
 	assert(x_min < x_max);
 	assert(y_min < y_max);
@@ -50,9 +51,9 @@ void compute_set(
 				std::complex<double> temp_complex(re[re_index], im[im_index]);
 				// this nested if statement could be deleted using a pointer to a function
 				if (is_julia)
-					__temp_current_value = mandelbrot_sequence(iterations, temp_complex, c);
+					__temp_current_value = mandelbrot_sequence(iterations, temp_complex, c, symmetry);
 				else
-					__temp_current_value = mandelbrot_sequence(iterations, std::complex<double>(0, 0), temp_complex);
+					__temp_current_value = mandelbrot_sequence(iterations, std::complex<double>(0, 0), temp_complex, symmetry);
 				find_extremums(__temp_current_value, min_value, max_value);
 				__temp_vector.push_back(__temp_current_value);
 			}
@@ -71,12 +72,14 @@ void fractal(
 	const double& image_ratio,
 	const double& resolution,
 	const double& zoom,
-	const unsigned int& iterations)
+	const unsigned int& iterations,
+	unsigned int symmetry)
 {
 	assert(iterations > 0);
 	assert(image_ratio > 0);
 	assert(resolution > 100);
 	assert(zoom > 0);
+	assert(symmetry >= 2);
 	
 	const double x_scale = 2.;
 	const double y_scale = 2. / image_ratio;
@@ -90,7 +93,7 @@ void fractal(
 	double_matrix complex_plane;
 	double min_value = 25000000, max_value = 0;
 	
-	compute_set(complex_plane,is_julia ,c , min_value, max_value, x_min, x_max, y_min, y_max, width, height, iterations);
+	compute_set(complex_plane,is_julia ,c , min_value, max_value, x_min, x_max, y_min, y_max, width, height, iterations, symmetry);
 	Img::Image image(file_name, width, height);
 	image.write_matrix(complex_plane, min_value, max_value);
 

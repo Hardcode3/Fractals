@@ -15,16 +15,17 @@ int main(int argc, char** argv)
 	auto begin = std::chrono::high_resolution_clock::now();
 
 	const bool julia = true;
-	std::complex<double> c_julia(-.08, .988);
+	std::complex<double> c_julia(-.005, .954);
 
 	const bool mandelbrot = false;
 	std::complex<double> c_mandelbrot(0, 0);
 
 	// future versions of the code will let the user trick the colors right in the main function
-	// args: path, true if julia set or false if mandelbrot set, starting complex number c, x_offset, y_offset, image_ratio, zoom, iterations
-	fractal("G:/test_julia.bmp", julia, c_julia, 0 ,0, 16./9., 1500, .7, 200);
-	fractal("G:/test_mandelbrot.bmp", mandelbrot, c_mandelbrot, 0 ,0, 16./9., 1000, .9, 80);
-	fractal("G:/test.bmp", mandelbrot, c_mandelbrot, 1.55, 0, 16. / 9., 10000, .5, 35);
+	// args: path, true if julia set or false if mandelbrot set, starting complex number c, x_offset, y_offset, image_ratio, zoom, iterations, symmetry (optional)
+	fractal("G:/test_julia.bmp", julia, c_julia, 0 ,0, 16./9., 1000, .4, 1500, 6);
+	
+	//fractal("G:/test_mandelbrot.bmp", mandelbrot, c_mandelbrot, 0 ,0, 16./9., 1000, .9, 80, 5);
+	//fractal("G:/test.bmp", mandelbrot, c_mandelbrot, 1.55, 0, 16. / 9., 5000, .5, 35, 5);
 	
 	auto end = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<float> execution_time = end - begin;

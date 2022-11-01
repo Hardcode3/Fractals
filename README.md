@@ -2,6 +2,7 @@
 ![mandelbrot_image_rgb](assets/color_sample.jpg)
 ![julia_image_rgb](assets/julia_sample.jpg)
 ![mandelbrot_bnw_image](assets/presentation.jpg)
+![julia_symmetry_6_image](assets/julia_symmetry_6.jpg)
 ## Description
 Fractals is a console application to create [fractal](https://en.wikipedia.org/wiki/Fractal) images.
 It uses the .bmp format as output.
@@ -31,6 +32,8 @@ Settings of the fractal [main.cpp](mains/main.cpp):
 - choose a resolution factor (such as 1000 pixels)
 - choose a zoom coefficient (x2 zooms in, x.5 zooms out)
 - decide of the number of iterations to allow before stopping the sequence
+- (optional: specifiy the symmetry of the mandelbrot or julia fractal)
+
 Recommended [settings](mains/main.cpp) are for instance:
 ```
 fractal("G:/test.bmp", true, std::complex<double>(.63, .87), 0 ,0, 16./9., 1000, 1, 35);

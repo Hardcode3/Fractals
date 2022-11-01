@@ -27,8 +27,10 @@ typedef std::vector <std::vector<std::complex<double>>> complex_matrix;
 * @param iterations max number of iterations allowed for the sequence
 * @param z the mooving complex number, with z = 0 + 0i at the start
 * @param c the fixed complex number (set with the current pixel positon in the complex plane)
+* @param symetry (the power of the mandelbrot sequence)
 */
 unsigned int mandelbrot_sequence(
 	const unsigned int &iterations, 
 	std::complex<double> &z,  
-	std::complex<double> &c);
+	std::complex<double> &c,
+	unsigned int symmetry=2);

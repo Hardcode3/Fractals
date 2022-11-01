@@ -112,6 +112,7 @@ void find_extremums(
 * @param width width of the image (in pixels or corresponds to the size of the stability_plane matrix)
 * @param height height of the image (in pixels or corresponds to the size of the stability_plane matrix)
 * @param iterations limit of iterations before stoppping the fractal sequence (@see sequence.h)
+* @param symetry (the power of the mandelbrot sequence)
 */
 void compute_set(
 	double_matrix& stability_plane,
@@ -125,7 +126,8 @@ void compute_set(
 	const double &y_max,
 	const unsigned int &width,
 	const unsigned int &height,
-	const unsigned int &iterations);
+	const unsigned int &iterations,
+	unsigned int symmetry=2);
 
 /*
 * @brief creates the fractal
@@ -138,6 +140,7 @@ void compute_set(
 * @param resolution number of pixel to enhance the quality of the image
 * @param zoom zoom applied to the image (between lim -> 0. and infinite)
 * @param iteratins limit of iterations before stoppping the fractal sequence (@see sequence.h)
+* @param symetry (the power of the mandelbrot sequence)
 */
 void fractal(
 	const char* file_name,
@@ -148,4 +151,5 @@ void fractal(
 	const double& image_ratio,
 	const double& resolution,
 	const double& zoom,
-	const unsigned int &iterations);
+	const unsigned int &iterations,
+	unsigned int symmetry=2);
