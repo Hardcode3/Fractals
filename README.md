@@ -45,9 +45,10 @@ The number of iterations controlls the detail of the fractal, see [assets/iterat
 
 ## Improvements
 Future versions will add:
+- [ ] Add a smoothing option for the contour of the fractal
+- [ ] Add a color options such as black and white, RGB and define color palets
 - [ ] Parallelisation / concurrency to get faster computation speeds
 - [ ] Optimize vectors by allocating them directly their definitive size
-- [ ] Ability to trick colors easily
 - [ ] Image compression
 - [ ] Other, more common output formats
 - [ ] Maybe a GUI, using ImGui ?
