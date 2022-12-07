@@ -6,11 +6,13 @@
 ## Description
 Fractals is a console application to create [fractal](https://en.wikipedia.org/wiki/Fractal) images.
 It uses the .bmp format as output.
+Compiles every time the program has to output an image.
 Supports both [Mandelbrot](https://en.wikipedia.org/wiki/Mandelbrot_set) and [Julia](https://en.wikipedia.org/wiki/Julia_set) sets.
 
 ## Install
 ### Dependencies
 There is no dependency.
+BMP format can only be read on Windows, or either on [VsCode](https://code.visualstudio.com/) or [Atom editor](https://atom.io/) with macOS / linux.
 ### CMake installation
 Make sure you have CMake installed and inside the clone repo, type:
 ```
