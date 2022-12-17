@@ -1,4 +1,4 @@
-# fractals
+# Mandelbrot and Julia fractal image generator
 ![mandelbrot_image_rgb](assets/color_sample.jpg)
 ![julia_image_rgb](assets/julia_sample.jpg)
 ![mandelbrot_bnw_image](assets/presentation.jpg)
