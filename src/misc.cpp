@@ -96,7 +96,7 @@ void fractal(
 	
 	compute_set(complex_plane,is_julia ,c , min_value, max_value, x_min, x_max, y_min, y_max, width, height, iterations, symmetry);
 	Img::Image image(file_name, width, height);
-	image.write_matrix(complex_plane, min_value, max_value);
+	image.write_matrix(complex_plane);
 
 	complex_plane.clear();
 }
