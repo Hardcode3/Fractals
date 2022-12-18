@@ -49,11 +49,12 @@ void compute_set(
 			for (unsigned int re_index = 0; re_index < width; re_index++) 
 			{
 				std::complex<double> temp_complex(re[re_index], im[im_index]);
+				std::complex<double> null_complex(0, 0);
 				// this nested if statement could be deleted using a pointer to a function
 				if (is_julia)
 					__temp_current_value = mandelbrot_sequence(iterations, temp_complex, c, symmetry);
 				else
-					__temp_current_value = mandelbrot_sequence(iterations, std::complex<double>(0, 0), temp_complex, symmetry);
+					__temp_current_value = mandelbrot_sequence(iterations, null_complex, temp_complex, symmetry);
 				find_extremums(__temp_current_value, min_value, max_value);
 				__temp_vector.push_back(__temp_current_value);
 			}
