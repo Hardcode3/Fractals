@@ -44,22 +44,23 @@ void Img::Image::set_color(const Color& color, int x, int y)
 }
 
 void Img::Image::write_matrix(
-	const std::vector<std::vector<double>>& double_matrix,
-	const unsigned int &min_value, 
-	const unsigned int &max_value) 
+	const std::vector<std::vector<float>>& matrix,
+	const float& min, 
+	const float& max,
+	const float& r,
+	const float& g,
+	const float& b)
 {
-	assert((double_matrix.size() == height_) && (double_matrix[0].size() == width_));
+	assert((matrix.size() == height_) && (matrix[0].size() == width_));
 
 	for (int y = 0; y < height_; y++) 
 	{
 		for (int x = 0; x < width_; x++) 
 		{
 			// normalisation of the values
-			float current_value = double_matrix[y][x] / max_value;
-			const float r = 0.4*2;
-			const float g = 0.4*2;
-			const float b = 0.7*4;
-	
+			float current_value = matrix[y][x];
+			
+			//std::cout << "colors : " << r << " " << g << " " << b << "\n";
 			// modify values here to change the colors of the image
 			set_color(Img::Color(current_value * r, current_value * g, current_value * b), x, y);
 		}

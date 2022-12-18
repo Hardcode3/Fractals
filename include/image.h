@@ -101,9 +101,12 @@ namespace Img {
 		* @param max_value the maximum value based on the whole matrix
 		*/
 		void write_matrix(
-			const std::vector<std::vector<double>>& double_matrix,
-			const unsigned int& min_value,
-			const unsigned int& max_value);
+			const std::vector<std::vector<float>>& matrix,
+			const float& min,
+			const float& max,
+			const float& r,
+			const float& g,
+			const float& b);
 
 		/*
 		* @brief save the image and close it

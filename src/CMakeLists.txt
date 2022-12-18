@@ -4,13 +4,11 @@ add_library (${target_name} STATIC "")
 
 target_sources (${target_name}
     PRIVATE
-        "${PROJECT_SOURCE_DIR}/src/misc.cpp"
         "${PROJECT_SOURCE_DIR}/src/image.cpp"
-        "${PROJECT_SOURCE_DIR}/src/sequence.cpp"
+        "${PROJECT_SOURCE_DIR}/src/fractal.cpp"
     PRIVATE
-        "${PROJECT_SOURCE_DIR}/include/misc.h"
         "${PROJECT_SOURCE_DIR}/include/image.h"
-        "${PROJECT_SOURCE_DIR}/include/sequence.h"
+        "${PROJECT_SOURCE_DIR}/include/fractal.h"
 )
 
 target_include_directories (${target_name}
