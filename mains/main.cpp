@@ -59,8 +59,8 @@ int main(int argc, char** argv)
 			<< "> Offset y		-off_y		Mandelbrot & Julia		OPTIONAL        double > 0		ex: -0.9\n"
 			<< "> Smooth		-sm		Mandelbrot & Julia		OPTIONAL	boolean			ex: 1 for true or 0 for false\n"
 			<< "> Red component		-r		Mandelbrot & Julia		OPTIONAL	0 < float < 1		ex: 0.2\n"
-			<< "> Green component		-g		Mandelbrot & Julia		OPTIONAL	0 < float < 1		ex: 0.2\n"
-			<< "> Blue component		-b		Mandelbrot & Julia		OPTIONAL	0 < float < 1		ex: 0.2\n";
+			<< "> Green component	-g		Mandelbrot & Julia		OPTIONAL	0 < float < 1		ex: 0.2\n"
+			<< "> Blue component	-b		Mandelbrot & Julia		OPTIONAL	0 < float < 1		ex: 0.2\n";
 		return 0;
 	}
 
