@@ -11,6 +11,7 @@ option (FRACTALS_TEST_WITH_EXECUTABLES "Compile mains" ON)
 option (FRACTALS_TEST_WITH_TESTS "Compile tests" ON)
 
 add_subdirectory (src)
+add_subdirectory(externals)
 
 if (FRACTALS_TEST_WITH_EXECUTABLES)
     message (STATUS "Configuring fractals project with executables")
