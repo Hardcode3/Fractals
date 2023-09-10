@@ -6,8 +6,7 @@
 
 ## Description
 Fractals is a console application to create [fractal](https://en.wikipedia.org/wiki/Fractal) images.
-It uses the .bmp format as output.
-Compiles every time the program has to output an image.
+It uses the .png format as output.
 Supports both [Mandelbrot](https://en.wikipedia.org/wiki/Mandelbrot_set) and [Julia](https://en.wikipedia.org/wiki/Julia_set) sets.
 
 ## Install
