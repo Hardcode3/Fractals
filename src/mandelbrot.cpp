@@ -1,9 +1,9 @@
 #include <mandelbrot.hpp>
 
-std::size_t mandelbrot(const std::complex<double>& c, const std::complex<double>& z0, std::size_t max_it, bool smooth)
+std::size_t mandelbrot(const std::complex<long double>& c, const std::complex<long double>& z0, std::size_t max_it, bool smooth)
 {
 	std::size_t iteration = 0;
-	std::complex<double> zn = z0;
+	std::complex<long double> zn = z0;
 
 	while (iteration < max_it && std::abs(zn) <= 2)
 	{

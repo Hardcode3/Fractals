@@ -10,9 +10,9 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		Fractals mandelbrot(3480 * 5, 3480 * 5, std::complex<double>(-1,-1), 1.0);
+		Fractals mandelbrot(3480 * 5, 2160 * 5, std::complex<long double>(0.001643721971153, 0.822467633298876), 0.0000000001);
 		
-		mandelbrot.compute_mandelbrot_async(80, std::complex<double>(0.001,0.0002), 50);
+		mandelbrot.compute_mandelbrot_async(4000, std::complex<long double>(0,0), 100);
 		//mandelbrot.compute_mandelbrot(100);
 
 		mandelbrot.export_png("mandelbrot.png");

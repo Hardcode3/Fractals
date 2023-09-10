@@ -1,11 +1,14 @@
 #include <fractals.hpp>
 
 
-Fractals::Fractals(std::size_t width, std::size_t height, std::complex<double> bottom_left, double span_real)
-	:width_(width), height_(height), start_real_(bottom_left.real()), start_imaginary_(bottom_left.imag())
+Fractals::Fractals(std::size_t width, std::size_t height, std::complex<long double> center, long double span_real)
+	:width_(width), height_(height)
 {
-	end_real_ = start_real_ + span_real;
-	end_imaginary_ = start_imaginary_ + height_ * span_real / width_;
+	start_real_ = center.real() - span_real / 2;
+	end_real_ = center.real() + span_real / 2;
+	const double sclaling = height_ * span_real / width_;
+	start_imaginary_ = center.imag() - sclaling / 2;
+	end_imaginary_ = center.imag() + sclaling / 2;
 	step_ = span_real / width_;
 	image_.resize(width_ * height_ * 4);
 	real_axis_.reserve(width_);
@@ -19,13 +22,13 @@ Fractals::~Fractals()
 
 void Fractals::build_grid()
 {
-	for (double real = start_real_; real < end_real_ - step_; real += step_)
+	for (long double real = start_real_; real < end_real_ - step_; real += step_)
 	{
-		real_axis_.emplace_back(real);
+		real_axis_.push_back(real);
 	}
-	for (double im = end_imaginary_; im > start_imaginary_ + step_; im -= step_)
+	for (long double im = start_imaginary_; im < end_imaginary_ - step_; im += step_)
 	{
-		imaginary_axis_.emplace_back(im);
+		imaginary_axis_.push_back(im);
 	}
 }
 
@@ -40,7 +43,7 @@ void Fractals::set_pixel_color(std::size_t x, std::size_t y, const RGBAPixel& pi
 	image_[pixel_index + 3] = pixel.alpha_;
 }
 
-bool Fractals::export_png(const std::filesystem::path& file_name)
+bool Fractals::export_png(const std::filesystem::path& file_name) const
 {
 	unsigned exit_code_1 = lodepng::encode(file_name.string(), image_, width_, height_);
 	if (exit_code_1)
@@ -55,17 +58,17 @@ bool Fractals::export_png(const std::filesystem::path& file_name)
 	}
 }
 
-void Fractals::compute_mandelbrot(std::size_t max_iteration, std::complex<double> z0)
+void Fractals::compute_mandelbrot(std::size_t max_iteration, std::complex<long double> z0)
 {
 	auto start_time = std::chrono::high_resolution_clock::now();
 	std::size_t iteration_nb = 0;
 	unsigned char normalized_iteration = 0.0;
-	std::complex<double> c;
+	std::complex<long double> c;
 	for (std::size_t real_ind = 0; real_ind < real_axis_.size(); real_ind++)
 	{
 		for (std::size_t im_ind = 0; im_ind < imaginary_axis_.size(); im_ind++)
 		{
-			c = std::complex<double>(real_axis_[real_ind], imaginary_axis_[im_ind]);
+			c = std::complex<long double>(real_axis_[real_ind], imaginary_axis_[im_ind]);
 			iteration_nb = mandelbrot(c, z0, max_iteration);
 			normalized_iteration = 255 - (int)(255 * iteration_nb / max_iteration);
 			set_pixel_color(real_ind, im_ind, RGBAPixel(normalized_iteration));
@@ -75,7 +78,7 @@ void Fractals::compute_mandelbrot(std::size_t max_iteration, std::complex<double
 	std::cout << "Execution time " << std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time) << "\n";
 }
 
-void Fractals::compute_mandelbrot_async(std::size_t max_iteration, std::complex<double> z0, std::size_t thread_count)
+void Fractals::compute_mandelbrot_async(std::size_t max_iteration, std::complex<long double> z0, std::size_t thread_count)
 {
 	if (thread_count == 0)
 	{
@@ -107,14 +110,14 @@ void Fractals::compute_mandelbrot_async(std::size_t max_iteration, std::complex<
 	{
 		std::size_t iteration_nb = 0;
 		unsigned char normalized_iteration = 0.0;
-		std::complex<double> c;
+		std::complex<long double> c;
 		for (std::size_t real_ind = 0; real_ind < real_axis_.size(); real_ind++)
 		{
 			for (std::size_t im_ind = start_index; im_ind < end_index; im_ind++)
 			{
-				c = std::complex<double>(real_axis_[real_ind], imaginary_axis_[im_ind]);
+				c = std::complex<long double>(real_axis_[real_ind], imaginary_axis_[im_ind]);
 				iteration_nb = mandelbrot(c, z0, max_iteration, true);
-				double fact = std::pow(static_cast<double>(iteration_nb) / max_iteration, -1);
+				long double fact = std::pow(static_cast<long double>(iteration_nb) / max_iteration, -1);
 				fact = (1 + std::cos(3.14 * fact)) / 2;
 				set_pixel_color(real_ind, im_ind, RGBAPixel(255 * fact , 255 * fact, 255 * fact, 255));
 			}
