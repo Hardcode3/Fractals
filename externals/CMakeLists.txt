@@ -9,6 +9,8 @@ else()
     message("> Lodepng already cloned, proceeding")
 endif()
 
+add_subdirectory(imgui)
+
 # add the library here
 set(LODEPNG_SRC
     #${CMAKE_CURRENT_SOURCE_DIR}/lodepng/lodepng_benchmark.cpp

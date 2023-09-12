@@ -1,4 +1,4 @@
-set (target_name sources)
+set (target_name fractals)
 
 add_library (${target_name} STATIC "")
 
@@ -21,5 +21,7 @@ target_include_directories (${target_name}
 )
 
 target_link_libraries(
-    ${target_name} PRIVATE lodepng
+    ${target_name} PRIVATE lodepng custom_imgui
 )
+
+add_subdirectory(gui)

@@ -10,8 +10,8 @@ int main(int argc, char** argv)
 {
 	try
 	{
-		Fractals mandelbrot(3480 * 5, 2160 * 5, std::complex<long double>(0, 0), 4);
-		
+		Fractals mandelbrot;
+		mandelbrot.init(3480, 2160, std::complex<long double>(0, 0), 4);
 		mandelbrot.compute_mandelbrot_async(200, std::complex<long double>(0,0), 25);
 		//mandelbrot.compute_mandelbrot(100);
 

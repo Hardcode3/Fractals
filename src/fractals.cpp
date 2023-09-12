@@ -15,38 +15,50 @@ void RGBAPixel::set_colormap(long double& normalized_value, ColorMap colormap)
 	}
 }
 
-Fractals::Fractals(std::size_t width, std::size_t height, std::complex<long double> center, long double span_real)
-	:width_(width), height_(height)
+void Fractals::reset()
 {
+	image_.clear();
+	real_axis_.clear();
+	imaginary_axis_.clear();
+}
+
+void Fractals::init(std::size_t width, std::size_t height, std::complex<long double> center, long double span_real)
+{
+	width_ = width;
+	height_ = height;
 	const long double span_im = height_ * span_real / width_; // use a 1:1 ratio for real / imaginary axis
 	step_real_ = span_real / width_;
 	step_im_ = span_im / height_;
 
 	start_real_ = center.real() - (span_real + step_real_) / 2;
-	end_real_ = center.real() + (span_real - step_real_) / 2 ;
+	end_real_ = center.real() + (span_real - step_real_) / 2;
 	start_imaginary_ = center.imag() - (span_im + step_im_) / 2;
 	end_imaginary_ = center.imag() + (span_im - step_im_) / 2;
-	
-	image_.resize(width_ * height_ * 4);
-	real_axis_.reserve(width_);
-	imaginary_axis_.reserve(height_);
-	build_grid();
-}
 
-Fractals::~Fractals()
-{
+	image_.resize(width_ * height_ * 4);
+	real_axis_.resize(width_);
+	imaginary_axis_.resize(height_);
+	build_grid();
 }
 
 void Fractals::build_grid()
 {
 	for (std::size_t i = 0; i < width_; i++)
 	{
-		real_axis_.push_back(start_real_ + i * step_real_);
+		real_axis_[i] = (start_real_ + i * step_real_);
 	}
 	for (std::size_t i = 0; i < height_; i++)
 	{
-		imaginary_axis_.push_back(start_imaginary_ + i * step_im_);
+		imaginary_axis_[i] = (start_imaginary_ + i * step_im_);
 	}
+}
+
+RGBAPixel Fractals::get_pixel(std::size_t x, std::size_t y) const
+{
+	std::size_t pixel_index = (y * width_ + x) * 4;
+	if (pixel_index >= image_.size())
+		throw std::out_of_range("Out of range pixel index for x = " + std::to_string(x) + ", y = " + std::to_string(y) + "\n");
+	return RGBAPixel(image_[pixel_index + 0], image_[pixel_index + 1], image_[pixel_index + 2], image_[pixel_index + 3]);
 }
 
 void Fractals::set_pixel_color(std::size_t x, std::size_t y, const RGBAPixel& pixel)
@@ -78,6 +90,7 @@ bool Fractals::export_png(const std::filesystem::path& file_name) const
 void Fractals::compute_mandelbrot(std::size_t max_iteration, std::complex<long double> z0, RGBAPixel::ColorMap colormap)
 {
 	auto start_time = std::chrono::high_resolution_clock::now();
+	is_computing_ = true;
 	std::size_t iteration_nb = 0;
 	unsigned char normalized_iteration = 0.0;
 	std::complex<long double> c;
@@ -94,11 +107,12 @@ void Fractals::compute_mandelbrot(std::size_t max_iteration, std::complex<long d
 			set_pixel_color(real_ind, im_ind, pixel);
 		}
 	}
+	is_computing_ = false;
 	auto end_time = std::chrono::high_resolution_clock::now();
 	std::cout << "Execution time " << std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time) << "\n";
 }
 
-void Fractals::compute_mandelbrot_async(std::size_t max_iteration, std::complex<long double> z0, std::size_t thread_count, RGBAPixel::ColorMap colormap)
+void Fractals::compute_mandelbrot_async(std::size_t max_iteration, std::complex<long double> z0, std::size_t thread_count, RGBAPixel::ColorMap colormap, int symmetry)
 {
 	if (thread_count == 0)
 	{
@@ -111,6 +125,7 @@ void Fractals::compute_mandelbrot_async(std::size_t max_iteration, std::complex<
 	}
 
 	auto start_time = std::chrono::high_resolution_clock::now();
+	is_computing_ = true;
 	
 	// spread the work on a given number of threads
 	std::size_t vertical_pixel_per_thread = height_ / thread_count;
@@ -126,7 +141,7 @@ void Fractals::compute_mandelbrot_async(std::size_t max_iteration, std::complex<
 	if (std::accumulate(vertical_pixels_for_each_thread.begin(), vertical_pixels_for_each_thread.end(), (std::size_t)(0)) != height_)
 		throw std::out_of_range("The number of pixels must be unchanged after workload spread");
 
-	auto compute_pixel_horiwontal_stripe = [this, &max_iteration, &z0, &colormap](std::size_t start_index, std::size_t end_index)
+	auto compute_pixel_horiwontal_stripe = [this, &max_iteration, &z0, &colormap, &symmetry](std::size_t start_index, std::size_t end_index)
 	{
 		std::size_t iteration_nb = 0;
 		unsigned char normalized_iteration = 0.0;
@@ -138,8 +153,7 @@ void Fractals::compute_mandelbrot_async(std::size_t max_iteration, std::complex<
 			for (std::size_t im_ind = start_index; im_ind < end_index; im_ind++)
 			{
 				c = std::complex<long double>(real_axis_[real_ind], imaginary_axis_[im_ind]);
-				//iteration_nb = mandelbrot(c, z0, max_iteration, false);
-				iteration_nb = mandelbrot(c, z0, max_iteration);
+				iteration_nb = mandelbrot(c, z0, max_iteration, symmetry);
 				fact = 1 / (static_cast<long double>(iteration_nb) / max_iteration);
 				pixel.set_colormap(fact, colormap);
 				set_pixel_color(real_ind, im_ind, pixel);
@@ -164,7 +178,7 @@ void Fractals::compute_mandelbrot_async(std::size_t max_iteration, std::complex<
 			thread.join();
 		}
 	}
-
+	is_computing_ = false;
 	auto end_time = std::chrono::high_resolution_clock::now();
 	std::cout << "Execution time " << std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time) << "\n";
 }
